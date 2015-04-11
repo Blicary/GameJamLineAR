@@ -43,7 +43,7 @@ public class Wizard : MonoBehaviour
         sprite.color = player_color;
 
         // pool lightning objects
-        ObjectPool.Instance.RequestObjects(lightning_prefab, 3, false);
+        ObjectPool.Instance.RequestObjects(lightning_prefab, 5, true);
     }
     public void Start()
     {
@@ -96,7 +96,10 @@ public class Wizard : MonoBehaviour
     }
     public void FireLightning()
     {
-        
+        Lightning lightning = ObjectPool.Instance.GetObject(lightning_prefab, false);
+        lightning.Initialize(this);
+
+        lightning.Fire(transform, GetComponent<Rigidbody2D>().velocity);
     }
     
     public void Reset()
@@ -113,11 +116,11 @@ public class Wizard : MonoBehaviour
         // slow down when no input to move
         if (input_direction.magnitude <= 0f)
         {
-            GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity / (1 + 5f * Time.deltaTime);
+            GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity / (1 + 2f * Time.deltaTime);
         }
         else
         {
-            GetComponent<Rigidbody2D>().AddForce(input_direction * 20000f * Time.deltaTime);
+            GetComponent<Rigidbody2D>().AddForce(input_direction * 5000f * Time.deltaTime);
             GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, max_speed);
         }
 
