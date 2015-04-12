@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
             InputManager.Vertical(pn)));
 
         // lightning
-        if (InputManager.ActionButton(pn)) wizard.FireLightning();
+        if (InputManager.ActionButtonDown(pn)) wizard.FireLightning();
     }
 	
 }

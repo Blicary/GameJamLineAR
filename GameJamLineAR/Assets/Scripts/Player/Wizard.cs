@@ -25,7 +25,7 @@ public class Wizard : MonoBehaviour
     private const float default_stun_duration = 1f;
     
     // Lightning ability
-    public Lightning lightning_prefab;
+    public Lightning2 lightning_prefab;
 
     // Input
     private Vector2 input_direction = Vector2.zero;
@@ -96,10 +96,10 @@ public class Wizard : MonoBehaviour
     }
     public void FireLightning()
     {
-        Lightning lightning = ObjectPool.Instance.GetObject(lightning_prefab, false);
+        Lightning2 lightning = ObjectPool.Instance.GetObject(lightning_prefab, false);
         lightning.Initialize(this);
 
-        lightning.Fire(transform, GetComponent<Rigidbody2D>().velocity);
+        lightning.Fire(transform.position, GetComponent<Rigidbody2D>().velocity);
     }
     
     public void Reset()
