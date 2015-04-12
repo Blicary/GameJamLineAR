@@ -15,6 +15,7 @@ public class MatchManager : MonoBehaviour
     }
     public void GameOver()
     {
+        Debug.Log("here");
         game_over = true;
         page_gg.TransitionIn();
     }

@@ -22,12 +22,5 @@ public class BeginPage : UIMenuPage {
 
     public void Update()
     {
-        if (Input.GetButtonDown("Submit"))
-        {
-            if (Transition() == 1)
-            {
-                match.NewGame();
-            }
-        }
     }
 }

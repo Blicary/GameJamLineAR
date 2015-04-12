@@ -52,7 +52,5 @@ public class Civilian : MonoBehaviour
     private void RandomizeDirection()
     {
         direction = new Vector2(GeneralHelpers.RandomSign(), GeneralHelpers.RandomSign());
-        Debug.Log(direction);
-
     }
 }
