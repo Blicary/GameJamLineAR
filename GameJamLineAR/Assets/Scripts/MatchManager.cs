@@ -11,7 +11,7 @@ public class MatchManager : MonoBehaviour
 
     public void NewGame()
     {
-        Application.LoadLevel("test_scene");
+        Application.LoadLevel("game");
     }
     public void GameOver()
     {
