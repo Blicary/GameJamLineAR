@@ -76,6 +76,10 @@ public class GeneralHelpers
         byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
         return new Color32(r, g, b, 255);
     }
+    public static int RandomSign()
+    {
+        return UnityEngine.Random.value > 0.5f ? 1 : -1;
+    }
 }
 
 public static class CoroutineUtil

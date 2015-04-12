@@ -80,6 +80,12 @@ public class Lightning2 : MonoBehaviour
             Wizard wiz = collision.collider.GetComponent<Wizard>();
             wiz.Kill();
         }
+        if (collision.collider.CompareTag("Civilian"))
+        {
+            //gameObject.SetActive(false);
+            Civilian civ = collision.collider.GetComponent<Civilian>();
+            civ.Kill();
+        }
     }
 
 
