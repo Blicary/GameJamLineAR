@@ -13,7 +13,7 @@ public class Civilian : MonoBehaviour
 
     private Vector2 direction;
     private float direction_timer;
-    private float speed, max_speed = 2, min_speed = 0.4f;
+    private float speed, max_speed = 3, min_speed = 1f;
 
 
     public void Start()
@@ -44,7 +44,7 @@ public class Civilian : MonoBehaviour
     {
         //GameObject.Destroy(gameObject);
         face.text = dead_face;
-        face.color = Color.red;
+        face.color = new Color(0.68f, 0.02f, 0.06f);
         rigid.isKinematic = true;
         gameObject.layer = ghost_layer;
     }
