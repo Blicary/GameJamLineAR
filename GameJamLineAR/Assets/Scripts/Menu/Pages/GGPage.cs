@@ -20,11 +20,11 @@ public class GGPage : UIMenuPage
         int result = match.GetWinningPlayer();
         if (result == 1)
         {
-            heading.text = GameSettings.Instance.player_name[0] + " Victory";
+            heading.text = GameSettings.Instance.player_name[0] + " Wins";
         }
         else if (result == 2)
         {
-            heading.text = GameSettings.Instance.player_name[1] + " Victory";
+            heading.text = GameSettings.Instance.player_name[1] + " Wins";
         }
         else
             heading.text = "Draw";

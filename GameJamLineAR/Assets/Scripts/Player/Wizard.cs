@@ -30,7 +30,7 @@ public class Wizard : MonoBehaviour
     
     // Lives
     private bool alive = true;
-    private int lives = 1;
+    private int lives = 2;
     private float time_as_ghost = 6;
 
     private string wizard_layer_name = "Wizard";
@@ -78,7 +78,7 @@ public class Wizard : MonoBehaviour
         if (!Stunned()) UpdateMovement();
 
         UpdateSprite();
-    }
+    }  
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
@@ -130,7 +130,7 @@ public class Wizard : MonoBehaviour
     }
     public void FireLightning()
     {
-        if (!alive) return;
+        if (!alive || match.IsGameOver()) return;
 
         Vector2 v = GetComponent<Rigidbody2D>().velocity;
         if (v.magnitude == 0) return;
