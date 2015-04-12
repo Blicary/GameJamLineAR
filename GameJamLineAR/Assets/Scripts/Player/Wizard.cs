@@ -17,10 +17,10 @@ public class Wizard : MonoBehaviour
     public FlashScreen flash;
 
     // Position and arena bounds
-    private const int bounds_width = 33, bounds_height = 17;
+    private const int bounds_width = 36, bounds_height = 20;
 
     // Movement
-    private const float max_speed = 5;
+    private const float max_speed = 7;
 
     // Stun
     private bool stunned = false;
@@ -167,7 +167,7 @@ public class Wizard : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, max_speed);
         }
 
-        /*
+        
         // restrict movement to court
         if (Mathf.Abs(transform.position.x) > bounds_width / 2f)
         {
@@ -183,7 +183,7 @@ public class Wizard : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
             transform.position = new Vector2(transform.position.x, Mathf.Sign(transform.position.y) * bounds_height / 2f);
         }
-         * */
+         
     }
     private void UpdateSprite()
     {
