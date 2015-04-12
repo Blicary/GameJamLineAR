@@ -2,15 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.UI;
 
 public class Wizard : MonoBehaviour 
 {
     // General
     public int player_number;
     public Color player_color;
+    private CameraShake cam_shake;
 
     // Rendering
     public SpriteRenderer sprite;
+    public FlashScreen flash;
 
     // Position and arena bounds
     private const int bounds_width = 33, bounds_height = 17;
@@ -50,7 +53,7 @@ public class Wizard : MonoBehaviour
     {   
         // set colors
         player_color = GameSettings.Instance.GetPlayerColor(player_number);
-        sprite.color = player_color;
+        //sprite.color = player_color;
 
         // pool lightning objects
         ObjectPool.Instance.RequestObjects(lightning_prefab, 20, true);
@@ -58,8 +61,8 @@ public class Wizard : MonoBehaviour
     public void Start()
     {
         // get references
-        //cam_shake = Camera.main.GetComponent<CameraShake>();
-        //if (!cam_shake) Debug.LogError("main camera has no CameraShake component");
+        cam_shake = Camera.main.GetComponent<CameraShake>();
+        if (!cam_shake) Debug.LogError("main camera has no CameraShake component");
 
         wizard_layer = LayerMask.NameToLayer(wizard_layer_name);
         ghost_layer = LayerMask.NameToLayer(ghost_layer_name);
@@ -70,6 +73,8 @@ public class Wizard : MonoBehaviour
     public void Update()
     {
         if (!Stunned()) UpdateMovement();
+
+        UpdateSprite();
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
@@ -111,6 +116,8 @@ public class Wizard : MonoBehaviour
             BecomeGhost();
         else
             DieForGood();
+
+        cam_shake.Shake(new CamShakeInstance(1f, 1f));
     }
 
     // racquet control
@@ -129,6 +136,10 @@ public class Wizard : MonoBehaviour
         lightning.Initialize(this);
 
         lightning.Fire(transform.position, v);
+
+        // effects
+        cam_shake.Shake(new CamShakeInstance(0.2f, 0.1f));
+        flash.Flash(Color.Lerp(player_color, Color.white, 0.35f));
     }
     
     public void Reset()
@@ -153,6 +164,7 @@ public class Wizard : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, max_speed);
         }
 
+        /*
         // restrict movement to court
         if (Mathf.Abs(transform.position.x) > bounds_width / 2f)
         {
@@ -168,6 +180,15 @@ public class Wizard : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
             transform.position = new Vector2(transform.position.x, Mathf.Sign(transform.position.y) * bounds_height / 2f);
         }
+         * */
+    }
+    private void UpdateSprite()
+    {
+        Rigidbody2D rigid = GetComponent<Rigidbody2D>();
+        Vector2 direction = rigid.velocity.normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x);
+        sprite.transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg + 90);
     }
     private IEnumerator UpdateStun()
     {
