@@ -10,6 +10,7 @@ public class Wizard : MonoBehaviour
     public int player_number;
     public Color player_color;
     private CameraShake cam_shake;
+    public MatchManager match;
 
     // Rendering
     public SpriteRenderer sprite;
@@ -29,7 +30,7 @@ public class Wizard : MonoBehaviour
     
     // Lives
     private bool alive = true;
-    private int lives = 5;
+    private int lives = 1;
     private float time_as_ghost = 6;
 
     private string wizard_layer_name = "Wizard";
@@ -72,6 +73,8 @@ public class Wizard : MonoBehaviour
     }
     public void Update()
     {
+        if (OutOfLives()) return;
+
         if (!Stunned()) UpdateMovement();
 
         UpdateSprite();
@@ -206,7 +209,9 @@ public class Wizard : MonoBehaviour
 
     private void DieForGood()
     {
-        GameObject.Destroy(gameObject);
+        sprite.enabled = false;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        match.GameOver();
     }
     private void BecomeGhost()
     {
@@ -243,5 +248,9 @@ public class Wizard : MonoBehaviour
     public Collider2D PhysicalCollider()
     {
         return GetComponent<Collider2D>();
+    }
+    public bool OutOfLives()
+    {
+        return lives <= 0;
     }
 }
