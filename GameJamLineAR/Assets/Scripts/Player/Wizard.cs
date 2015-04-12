@@ -24,6 +24,16 @@ public class Wizard : MonoBehaviour
     private float stun_duration;
     private const float default_stun_duration = 1f;
     
+    // Lives
+    private bool alive = true;
+    private int lives = 5;
+    private float time_as_ghost = 6;
+
+    private string wizard_layer_name = "Wizard";
+    private string ghost_layer_name = "Ghost";
+    private int wizard_layer, ghost_layer;
+
+
     // Lightning ability
     public Lightning2 lightning_prefab;
 
@@ -43,13 +53,17 @@ public class Wizard : MonoBehaviour
         sprite.color = player_color;
 
         // pool lightning objects
-        ObjectPool.Instance.RequestObjects(lightning_prefab, 5, true);
+        ObjectPool.Instance.RequestObjects(lightning_prefab, 20, true);
     }
     public void Start()
     {
         // get references
         //cam_shake = Camera.main.GetComponent<CameraShake>();
         //if (!cam_shake) Debug.LogError("main camera has no CameraShake component");
+
+        wizard_layer = LayerMask.NameToLayer(wizard_layer_name);
+        ghost_layer = LayerMask.NameToLayer(ghost_layer_name);
+
 
         Reset();
     }
@@ -88,6 +102,16 @@ public class Wizard : MonoBehaviour
     {
         Stun(default_stun_duration);
     }
+    public void Kill()
+    {
+        lives--;
+        alive = false;
+
+        if (lives > 0)
+            BecomeGhost();
+        else
+            DieForGood();
+    }
 
     // racquet control
     public void SetMoveDirection(Vector2 direction)
@@ -96,10 +120,15 @@ public class Wizard : MonoBehaviour
     }
     public void FireLightning()
     {
+        if (!alive) return;
+
+        Vector2 v = GetComponent<Rigidbody2D>().velocity;
+        if (v.magnitude == 0) return;
+
         Lightning2 lightning = ObjectPool.Instance.GetObject(lightning_prefab, false);
         lightning.Initialize(this);
 
-        lightning.Fire(transform.position, GetComponent<Rigidbody2D>().velocity);
+        lightning.Fire(transform.position, v);
     }
     
     public void Reset()
@@ -116,11 +145,11 @@ public class Wizard : MonoBehaviour
         // slow down when no input to move
         if (input_direction.magnitude <= 0f)
         {
-            GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity / (1 + 2f * Time.deltaTime);
+            GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity / (1 + 1.5f * Time.deltaTime);
         }
         else
         {
-            GetComponent<Rigidbody2D>().AddForce(input_direction * 5000f * Time.deltaTime);
+            GetComponent<Rigidbody2D>().AddForce(input_direction * 4000f * Time.deltaTime);
             GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, max_speed);
         }
 
@@ -152,6 +181,36 @@ public class Wizard : MonoBehaviour
         stun_time_left = 0;
         stunned = false;
         GetComponent<Rigidbody2D>().isKinematic = false;
+    }
+
+    private void DieForGood()
+    {
+        GameObject.Destroy(gameObject);
+    }
+    private void BecomeGhost()
+    {
+        gameObject.layer = ghost_layer;
+
+        // visual
+        SpriteRenderer rend = sprite.GetComponent<SpriteRenderer>();
+        rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, 0.3f);
+
+        StartCoroutine("UpdateGhost");
+    }
+    private void Respawn()
+    {
+        alive = true;
+        gameObject.layer = wizard_layer;
+
+        SpriteRenderer rend = sprite.GetComponent<SpriteRenderer>();
+        rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, 1f);
+    }
+    private IEnumerator UpdateGhost()
+    {
+        yield return new WaitForSeconds(time_as_ghost);
+        
+        // respawn
+        Respawn();
     }
 
     // PUBLIC ACCESSORS 

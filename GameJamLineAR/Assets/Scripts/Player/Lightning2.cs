@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Lightning2 : MonoBehaviour 
 {
     // movement and collision
-    private const float speed = 5;
+    private const float speed = 20;
     public Rigidbody2D rig2D;
 
     // general
@@ -13,13 +13,15 @@ public class Lightning2 : MonoBehaviour
 
     // visual
     public LineRenderer line;
-    private const float length = 10f;
-    private const float zigzag_intensity = 0.8f;
-    private const float redraw_rate = 15; // redraws per second
+    private const float zigzag_intensity = 0.5f;
+    private const float redraw_rate = 30; // redraws per second
     private float redraw_timer = 0;
-    private const int max_num_positions = 3;
-    private List<Vector2> fixed_points;
-
+    
+    private const int max_num_positions = 10;
+    private bool[] point_active = new bool[max_num_positions];
+    private bool[] point_fixed = new bool[max_num_positions];
+    private Vector2[] points = new Vector2[max_num_positions];
+    private int start_point_i = 0;
 
     
     // PUBLIC MODIFIERS
@@ -27,7 +29,8 @@ public class Lightning2 : MonoBehaviour
     public void Initialize(Wizard wizard)
     {
         this.wizard = wizard;
-        line.SetColors(wizard.player_color, Color.Lerp(wizard.player_color, Color.white, 0.9f));
+        line.SetColors(Color.Lerp(wizard.player_color, Color.white, 0.8f),
+            Color.Lerp(wizard.player_color, Color.white, 0.4f));
 
         //cam_shake = Camera.main.GetComponent<CameraShake>();
         //if (!cam_shake) Debug.LogError("no CameraShake found");
@@ -38,42 +41,44 @@ public class Lightning2 : MonoBehaviour
         rig2D.velocity = direction * speed;
         rig2D.transform.position = pos + direction;
 
-        fixed_points = new List<Vector2>();
-        fixed_points.Add(pos);
-        fixed_points.Add(pos + direction);
-
-        redraw_timer = 0;
+        for (int i = 0; i < max_num_positions; ++i)
+        {
+            point_fixed[i] = false;
+            point_active[i] = false;
+            points[i] = new Vector2();
+        }
+        start_point_i = -1;
+        redraw_timer = 0f;
     }
     public void Update()
     {
         if (!line.enabled) return;
 
-        UpdateFixedPositions();
+        UpdateLifeTime();
 
         // update redraw and re-collide
         redraw_timer -= Time.deltaTime;
         if (redraw_timer <= 0)
         {
-            // redraw and collide
+            ActivateNextPoint(false);
+
+            // redraw
             ReDrawLine();
             redraw_timer = 1f / redraw_rate;
         }
-    }
-    public void UpdateFixedPositions()
-    {
-        // shrink trailing segment of line
-        Vector2 segment_dir = (fixed_points[1] - fixed_points[0]).normalized;
-        //fixed_points[0] += segment_dir * speed;
-
-        // update tip of line
-        fixed_points[fixed_points.Count - 1] = rig2D.transform.position;
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Obstacle"))
         {
             // add fixed point            
-            fixed_points.Add(collision.collider.transform.position);
+            ActivateNextPoint(true);
+        }
+        if (collision.collider.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+            Wizard wiz = collision.collider.GetComponent<Wizard>();
+            wiz.Kill();
         }
     }
 
@@ -81,37 +86,51 @@ public class Lightning2 : MonoBehaviour
 
     // PRIVATE MODIFIERS
 
+    private void UpdateLifeTime()
+    {
+        if (rig2D.velocity.magnitude <= speed / 2f)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+    private void ActivateNextPoint(bool fix_point)
+    {
+        // bring next point to front of line
+        start_point_i = (start_point_i + 1) % max_num_positions;
+
+        point_active[start_point_i] = true;
+        point_fixed[start_point_i] = fix_point;
+        points[start_point_i] = rig2D.transform.position;
+    }
     private void ReDrawLine()
     {
-        float positions_per_dist = max_num_positions / length;
-
-        int segment_first_i = 0;
         float intensity = zigzag_intensity;
 
-        // update positions for each segment (between fixed points)
-        for (int i = 1; i < fixed_points.Count; ++i)
+        for (int i = 0; i < max_num_positions; ++i)
         {
-            Vector2 fixedpoint1 = fixed_points[i - 1];
-            Vector2 fixedpoint2 = fixed_points[i];
+            int point_i = mod(start_point_i - i, max_num_positions);
 
-            float dist = (fixedpoint2 - fixedpoint1).magnitude;
-            int num_positions = Mathf.FloorToInt(positions_per_dist * dist);
-
-            // update positions along this segment
-            for (int j = 0; j < num_positions + 1; ++j)
+            if (!point_active[i])
             {
-                if (segment_first_i + j >= max_num_positions) break;
-
-                Vector2 pos = Vector2.Lerp(fixedpoint1, fixedpoint2, j / (float)num_positions);
-                //pos += new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * intensity;
-                intensity /= 1.08f;
-
-                line.SetPosition(segment_first_i + j, pos);
+                line.SetPosition(point_i, points[0]);
+                continue;
             }
+                
 
-            segment_first_i += num_positions;
+            Vector2 pos = points[i];
 
+            if (!point_fixed[i])
+               pos += new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * intensity;
+            intensity /= 1.08f;
+
+            line.SetPosition(point_i, pos);
         }
+    }
+
+
+    int mod(int x, int m)
+    {
+        return (x % m + m) % m;
     }
 
 }
