@@ -1,0 +1,103 @@
+Initialize engine version: 5.0.0f4 (5b98b70ebeb9)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA NVS 5200M (ID=0x1140)
+    Vendor:   NVIDIA
+    VRAM:     971 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.168 seconds
+desktop: 1024x768 60Hz; virtual: 1024x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+Initialize engine version: 5.0.0f4 (5b98b70ebeb9)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA NVS 5200M (ID=0x1140)
+    Vendor:   NVIDIA
+    VRAM:     971 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.147 seconds
+<RI> Initialized touch support.
+desktop: 1024x768 60Hz; virtual: 1024x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+Platform assembly: C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Robert Wild\Desktop\GameJamLineAR\GameJamLineAR\build1_Data\Managed\System.dll (this message is harmless)
+here
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.039727 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 870.
+Total: 0.676664 ms (FindLiveObjects: 0.086706 ms CreateObjectMapping: 0.050254 ms MarkObjects: 0.525193 ms  DeleteObjects: 0.013094 ms)
+
+here
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.095820 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 870.
+Total: 0.700022 ms (FindLiveObjects: 0.093430 ms CreateObjectMapping: 0.059101 ms MarkObjects: 0.531917 ms  DeleteObjects: 0.013802 ms)
+
+here
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.051936 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 870.
+Total: 0.626410 ms (FindLiveObjects: 0.086352 ms CreateObjectMapping: 0.049900 ms MarkObjects: 0.476708 ms  DeleteObjects: 0.011678 ms)
+
+here
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+here
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.468835 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 870.
+Total: 1.087547 ms (FindLiveObjects: 0.118557 ms CreateObjectMapping: 0.086352 ms MarkObjects: 0.859987 ms  DeleteObjects: 0.020880 ms)
+
+here
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.735899 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 870.
+Total: 0.675956 ms (FindLiveObjects: 0.083875 ms CreateObjectMapping: 0.054855 ms MarkObjects: 0.521654 ms  DeleteObjects: 0.014156 ms)
+
+here
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebug.gen.cpp Line: 56)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.711834 ms
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 870.
+Total: 0.834505 ms (FindLiveObjects: 0.082459 ms CreateObjectMapping: 0.050608 ms MarkObjects: 0.686574 ms  DeleteObjects: 0.013802 ms)
+
